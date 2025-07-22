@@ -1,3 +1,29 @@
 import "./style.css";
 
-console.log("Hello Typescript!");
+document.addEventListener("DOMContentLoaded", () => {
+  muestraPuntuacion(puntuacion);
+  eventos();
+});
+
+let puntuacion = 0;
+
+const muestraPuntuacion = (puntuacion: number): void => {
+  const puntos = document.getElementById("puntos");
+  if (puntos) {
+    puntos.textContent = puntuacion.toString();
+  } else {
+    console.log("Elemento ' puntos' no encontrado");
+  }
+};
+
+const dameCarta = () => {};
+
+/* --------------------------------------------FUNCION EVENTOS xra lso BOTONES--------------------- */
+
+function eventos() {
+  const botonEventos = document.getElementById("dame-carta");
+
+  if (botonEventos) {
+    botonEventos.addEventListener("click", dameCarta);
+  }
+}

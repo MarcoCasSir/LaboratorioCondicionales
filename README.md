@@ -1,3 +1,1 @@
-# typescript-sandbox
-
-# Laboratorio Condicionales
+# Juego de Cartas SIETE Y MEDIO
