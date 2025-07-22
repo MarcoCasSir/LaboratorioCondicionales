@@ -21,7 +21,9 @@ const muestraPuntuacion = (puntuacion: number): void => {
 const dameCarta = (): number => {
   let numeroCarta = Math.floor(Math.random() * 10) + 1;
 
-  return numeroCarta > 7 ? 0.5 : numeroCarta;
+  if (numeroCarta > 7) numeroCarta + 2;
+
+  return numeroCarta;
 };
 
 /* --------------------------------------------FUNCION EVENTOS xra lso BOTONES--------------------- */
@@ -31,6 +33,7 @@ function eventos() {
 
   if (botonEventos) {
     /*botonEventos.addEventListener("click", dameCarta);*/
+    /* comprobamos que todo funcione correctamente */
     botonEventos.addEventListener("click", () => {
       const valor = dameCarta();
       console.log(valor);
