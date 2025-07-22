@@ -16,7 +16,13 @@ const muestraPuntuacion = (puntuacion: number): void => {
   }
 };
 
-const dameCarta = () => {};
+/* ---------------------------------------------FUNCION PARA PEDIR CARTAS ------------------------ */
+
+const dameCarta = (): number => {
+  let numeroCarta = Math.floor(Math.random() * 10) + 1;
+
+  return numeroCarta > 7 ? 0.5 : numeroCarta;
+};
 
 /* --------------------------------------------FUNCION EVENTOS xra lso BOTONES--------------------- */
 
@@ -24,6 +30,10 @@ function eventos() {
   const botonEventos = document.getElementById("dame-carta");
 
   if (botonEventos) {
-    botonEventos.addEventListener("click", dameCarta);
+    /*botonEventos.addEventListener("click", dameCarta);*/
+    botonEventos.addEventListener("click", () => {
+      const valor = dameCarta();
+      console.log(valor);
+    });
   }
 }
