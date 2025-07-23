@@ -2,6 +2,7 @@ import "./style.css";
 
 let puntos: HTMLElement;
 let mensaje: HTMLElement;
+let imagen: HTMLImageElement;
 let botonDameCarta: HTMLButtonElement;
 let botonMePlanto: HTMLButtonElement;
 let botonNuevaPartida: HTMLButtonElement;
@@ -9,6 +10,7 @@ let botonNuevaPartida: HTMLButtonElement;
 document.addEventListener("DOMContentLoaded", () => {
   puntos = document.getElementById("puntos") as HTMLElement;
   mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
+  imagen = document.getElementById("imagen-carta") as HTMLImageElement;
   botonDameCarta = document.getElementById("dame-carta") as HTMLButtonElement;
   botonMePlanto = document.getElementById("me-planto") as HTMLButtonElement;
   botonNuevaPartida = document.getElementById("reiniciar") as HTMLButtonElement;
@@ -96,19 +98,13 @@ const gameOver = (puntuacion: number): void => {
 /* ------------------------------------FUNCION ME PLANTO----------------------------------- */
 
 const mePlanto = (): void => {
-  let puntuacionActual: number = 0;
-
-  if (puntos.textContent) {
-    puntuacionActual = parseFloat(puntos.textContent);
-  }
-
-  if (puntuacionActual < 4) {
+  if (puntuacion < 4) {
     mensaje.textContent = `HAS SIDO MUY CONSERVADOR`;
-  } else if (puntuacionActual === 5) {
+  } else if (puntuacion === 5) {
     mensaje.textContent = `TE HA ENTRADO EL CAGUELO EH!!!`;
-  } else if (puntuacionActual === 6 || puntuacionActual === 7) {
+  } else if (puntuacion === 6 || puntuacion === 7) {
     mensaje.textContent = `CASI CASI  EH!!!`;
-  } else if (puntuacionActual === 7.5) {
+  } else if (puntuacion === 7.5) {
     mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
   }
 
@@ -130,13 +126,12 @@ const mePlanto = (): void => {
 const nuevaPartida = (): void => {
   puntuacion = 0;
 
-  const imagen = document.getElementById("imagen-carta") as HTMLImageElement;
-
   if (imagen) {
     imagen.src = "src/img/back.jpg";
   }
 
   muestraPuntuacion(puntuacion);
+  mensaje.textContent = "";
 
   if (botonDameCarta) {
     botonDameCarta.disabled = false;
@@ -153,7 +148,6 @@ const nuevaPartida = (): void => {
 /* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
 
 const muestraCarta = (carta: number): void => {
-  const imagen = document.getElementById("imagen-carta") as HTMLImageElement;
   if (imagen) {
     switch (carta) {
       case 1:
