@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let puntuacion = 0;
 
+/* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION------------------- */
+
 const muestraPuntuacion = (puntuacion: number): void => {
   const puntos = document.getElementById("puntos");
   if (puntos) {
@@ -16,7 +18,15 @@ const muestraPuntuacion = (puntuacion: number): void => {
   }
 };
 
-/* ---------------------------------------------FUNCION PARA PEDIR CARTAS ------------------------ */
+/* ---------------------------------FUNCION PARA SUMAR PUNTOS -------------------------- */
+
+const sumarPuntos = (carta: number): void => {
+  puntuacion += carta;
+
+  muestraPuntuacion(puntuacion);
+};
+
+/* ------------------------------------FUNCION PARA PEDIR CARTAS ------------------------ */
 
 const dameCarta = (): void => {
   let carta = Math.floor(Math.random() * 10) + 1;
@@ -26,9 +36,10 @@ const dameCarta = (): void => {
   }
 
   muestraCarta(carta);
+  sumarPuntos(carta);
 };
 
-/* ---------------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
+/* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
 
 const muestraCarta = (carta: number): void => {
   const imagen = document.getElementById("imagen-carta") as HTMLImageElement;
