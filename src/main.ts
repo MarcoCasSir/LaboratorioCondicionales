@@ -54,6 +54,39 @@ const gameOver = (puntuacion: number): void => {
   let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
   if (puntuacion > 7.5) {
     mensaje.textContent = `TE HAS PASADO - GAME OVER`;
+    const botonMePlanto = document.getElementById(
+      "me-planto"
+    ) as HTMLButtonElement;
+
+    if (botonMePlanto) {
+      botonMePlanto.disabled = true;
+    }
+
+    const botonDameCarta = document.getElementById(
+      "dame-carta"
+    ) as HTMLButtonElement;
+
+    if (botonDameCarta) {
+      botonDameCarta.disabled = true;
+    }
+  } else if (puntuacion === 7.5) {
+    mensaje.textContent = `HAS GANADO !!!!!  - GAME OVER`;
+
+    const botonMePlanto = document.getElementById(
+      "me-planto"
+    ) as HTMLButtonElement;
+
+    if (botonMePlanto) {
+      botonMePlanto.disabled = true;
+    }
+
+    const botonDameCarta = document.getElementById(
+      "dame-carta"
+    ) as HTMLButtonElement;
+
+    if (botonDameCarta) {
+      botonDameCarta.disabled = true;
+    }
   }
 };
 
@@ -77,6 +110,14 @@ const mePlanto = (): void => {
     mensaje.textContent = `CASI CASI  EH!!!`;
   } else if (puntuacionActual === 7.5) {
     mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
+  }
+
+  const botonDameCarta = document.getElementById(
+    "dame-carta"
+  ) as HTMLButtonElement;
+
+  if (botonDameCarta) {
+    botonDameCarta.disabled = true;
   }
 };
 
@@ -123,10 +164,10 @@ const muestraCarta = (carta: number): void => {
 /* --------------------------------------------FUNCION EVENTOS xra lso BOTONES--------------------- */
 
 function eventos() {
-  const botonEventos = document.getElementById("dame-carta");
+  const botonDameCarta = document.getElementById("dame-carta");
 
-  if (botonEventos) {
-    botonEventos.addEventListener("click", dameCarta);
+  if (botonDameCarta) {
+    botonDameCarta.addEventListener("click", dameCarta);
   }
 
   const botonMePlanto = document.getElementById("me-planto");
