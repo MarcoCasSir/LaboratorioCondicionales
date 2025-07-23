@@ -6,6 +6,7 @@ let imagen: HTMLImageElement;
 let botonDameCarta: HTMLButtonElement;
 let botonMePlanto: HTMLButtonElement;
 let botonNuevaPartida: HTMLButtonElement;
+let botonSiguienteCarta: HTMLButtonElement;
 
 document.addEventListener("DOMContentLoaded", () => {
   puntos = document.getElementById("puntos") as HTMLElement;
@@ -14,12 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
   botonDameCarta = document.getElementById("dame-carta") as HTMLButtonElement;
   botonMePlanto = document.getElementById("me-planto") as HTMLButtonElement;
   botonNuevaPartida = document.getElementById("reiniciar") as HTMLButtonElement;
+  botonSiguienteCarta = document.getElementById(
+    "como-seria"
+  ) as HTMLButtonElement;
 
   eventos();
   muestraPuntuacion(puntuacion);
 
   if (botonNuevaPartida) {
     botonNuevaPartida.disabled = true;
+  }
+
+  if (botonSiguienteCarta) {
+    botonSiguienteCarta.disabled = true;
   }
 });
 
@@ -119,6 +127,10 @@ const mePlanto = (): void => {
   if (botonMePlanto) {
     botonMePlanto.disabled = true;
   }
+
+  if (botonSiguienteCarta) {
+    botonSiguienteCarta.disabled = false;
+  }
 };
 
 /* -------------------------------------FUNCION NUEVO JUEGO ------------------------------ */
@@ -145,6 +157,21 @@ const nuevaPartida = (): void => {
     botonNuevaPartida.disabled = true;
   }
 };
+
+/* -------------------------------------FUNCION SIGUIENTE CARTA ------------------------------ */
+
+const proximaCarta = (): void => {
+  let carta = Math.floor(Math.random() * 10) + 1;
+
+  if (carta > 7) {
+    carta += 2;
+  }
+
+  muestraCarta(carta);
+  sumarPuntos(carta);
+  gameOver(puntuacion);
+};
+
 /* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
 
 const muestraCarta = (carta: number): void => {
@@ -197,5 +224,9 @@ function eventos() {
 
   if (botonNuevaPartida) {
     botonNuevaPartida.addEventListener("click", nuevaPartida);
+  }
+
+  if (botonSiguienteCarta) {
+    botonSiguienteCarta.addEventListener("click", proximaCarta);
   }
 }
