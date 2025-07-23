@@ -90,6 +90,9 @@ const gameOver = (puntuacion: number): void => {
     if (botonNuevaPartida) {
       botonNuevaPartida.disabled = false;
     }
+    if (botonSiguienteCarta) {
+      botonSiguienteCarta.disabled = true;
+    }
   } else if (puntuacion === 7.5) {
     mensaje.textContent = `HAS GANADO !!!!!  - GAME OVER`;
 
@@ -97,8 +100,16 @@ const gameOver = (puntuacion: number): void => {
       botonMePlanto.disabled = true;
     }
 
+    if (botonNuevaPartida) {
+      botonNuevaPartida.disabled = false;
+    }
+
     if (botonDameCarta) {
       botonDameCarta.disabled = true;
+    }
+
+    if (botonSiguienteCarta) {
+      botonSiguienteCarta.disabled = true;
     }
   }
 };
@@ -155,6 +166,10 @@ const nuevaPartida = (): void => {
 
   if (botonNuevaPartida) {
     botonNuevaPartida.disabled = true;
+  }
+
+  if (botonSiguienteCarta) {
+    botonSiguienteCarta.disabled = true;
   }
 };
 
