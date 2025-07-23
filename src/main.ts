@@ -21,7 +21,15 @@ const muestraPuntuacion = (puntuacion: number): void => {
 /* ---------------------------------FUNCION PARA SUMAR PUNTOS -------------------------- */
 
 const sumarPuntos = (carta: number): void => {
-  puntuacion += carta;
+  let valorCarta: number;
+
+  if (carta === 10 || carta === 11 || carta === 12) {
+    valorCarta = 0.5;
+  } else {
+    valorCarta = carta;
+  }
+
+  puntuacion += valorCarta;
 
   muestraPuntuacion(puntuacion);
 };
@@ -37,6 +45,16 @@ const dameCarta = (): void => {
 
   muestraCarta(carta);
   sumarPuntos(carta);
+  gameOver(puntuacion);
+};
+
+/* ------------------------------------FUNCION GAME OVER--------- ------------------------ */
+
+const gameOver = (puntuacion: number): void => {
+  let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
+  if (puntuacion > 7.5) {
+    mensaje.textContent = `TU PUNTUACION HA SUPERADO 7.5 PUNTOS - GAME OVER`;
+  }
 };
 
 /* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
