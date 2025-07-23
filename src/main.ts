@@ -1,12 +1,20 @@
 import "./style.css";
 
+let puntos: HTMLElement;
+let mensaje: HTMLElement;
+let botonDameCarta: HTMLButtonElement;
+let botonMePlanto: HTMLButtonElement;
+let botonNuevaPartida: HTMLButtonElement;
+
 document.addEventListener("DOMContentLoaded", () => {
+  puntos = document.getElementById("puntos") as HTMLElement;
+  mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
+  botonDameCarta = document.getElementById("dame-carta") as HTMLButtonElement;
+  botonMePlanto = document.getElementById("me-planto") as HTMLButtonElement;
+  botonNuevaPartida = document.getElementById("reiniciar") as HTMLButtonElement;
+
   eventos();
   muestraPuntuacion(puntuacion);
-
-  const botonNuevaPartida = document.getElementById(
-    "reiniciar"
-  ) as HTMLButtonElement;
 
   if (botonNuevaPartida) {
     botonNuevaPartida.disabled = true;
@@ -18,7 +26,6 @@ let puntuacion = 0;
 /* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION------------------- */
 
 const muestraPuntuacion = (puntuacion: number): void => {
-  const puntos = document.getElementById("puntos");
   if (puntos) {
     puntos.textContent = puntuacion.toString();
   } else {
@@ -59,28 +66,16 @@ const dameCarta = (): void => {
 /* ------------------------------------FUNCION GAME OVER---------------------------------- */
 
 const gameOver = (puntuacion: number): void => {
-  let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
   if (puntuacion > 7.5) {
     mensaje.textContent = `TE HAS PASADO - GAME OVER`;
-    const botonMePlanto = document.getElementById(
-      "me-planto"
-    ) as HTMLButtonElement;
 
     if (botonMePlanto) {
       botonMePlanto.disabled = true;
     }
 
-    const botonDameCarta = document.getElementById(
-      "dame-carta"
-    ) as HTMLButtonElement;
-
     if (botonDameCarta) {
       botonDameCarta.disabled = true;
     }
-
-    const botonNuevaPartida = document.getElementById(
-      "reiniciar"
-    ) as HTMLButtonElement;
 
     if (botonNuevaPartida) {
       botonNuevaPartida.disabled = false;
@@ -88,17 +83,9 @@ const gameOver = (puntuacion: number): void => {
   } else if (puntuacion === 7.5) {
     mensaje.textContent = `HAS GANADO !!!!!  - GAME OVER`;
 
-    const botonMePlanto = document.getElementById(
-      "me-planto"
-    ) as HTMLButtonElement;
-
     if (botonMePlanto) {
       botonMePlanto.disabled = true;
     }
-
-    const botonDameCarta = document.getElementById(
-      "dame-carta"
-    ) as HTMLButtonElement;
 
     if (botonDameCarta) {
       botonDameCarta.disabled = true;
@@ -109,13 +96,10 @@ const gameOver = (puntuacion: number): void => {
 /* ------------------------------------FUNCION ME PLANTO----------------------------------- */
 
 const mePlanto = (): void => {
-  let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
-
-  let puntos = (document.getElementById("puntos") as HTMLElement).textContent;
   let puntuacionActual: number = 0;
 
-  if (puntos) {
-    puntuacionActual = parseFloat(puntos);
+  if (puntos.textContent) {
+    puntuacionActual = parseFloat(puntos.textContent);
   }
 
   if (puntuacionActual < 4) {
@@ -128,25 +112,13 @@ const mePlanto = (): void => {
     mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
   }
 
-  const botonNuevaPartida = document.getElementById(
-    "reiniciar"
-  ) as HTMLButtonElement;
-
   if (botonNuevaPartida) {
     botonNuevaPartida.disabled = false;
   }
 
-  const botonDameCarta = document.getElementById(
-    "dame-carta"
-  ) as HTMLButtonElement;
-
   if (botonDameCarta) {
     botonDameCarta.disabled = true;
   }
-
-  const botonMePlanto = document.getElementById(
-    "me-planto"
-  ) as HTMLButtonElement;
 
   if (botonMePlanto) {
     botonMePlanto.disabled = true;
@@ -166,25 +138,13 @@ const nuevaPartida = (): void => {
 
   muestraPuntuacion(puntuacion);
 
-  const botonDameCarta = document.getElementById(
-    "dame-carta"
-  ) as HTMLButtonElement;
-
   if (botonDameCarta) {
     botonDameCarta.disabled = false;
   }
 
-  const botonMePlanto = document.getElementById(
-    "me-planto"
-  ) as HTMLButtonElement;
-
   if (botonMePlanto) {
     botonMePlanto.disabled = false;
   }
-
-  const botonNuevaPartida = document.getElementById(
-    "reiniciar"
-  ) as HTMLButtonElement;
 
   if (botonNuevaPartida) {
     botonNuevaPartida.disabled = true;
@@ -233,19 +193,13 @@ const muestraCarta = (carta: number): void => {
 /* ----------------------------------FUNCION EVENTOS xra los BOTONES--------------------- */
 
 function eventos() {
-  const botonDameCarta = document.getElementById("dame-carta");
-
   if (botonDameCarta) {
     botonDameCarta.addEventListener("click", dameCarta);
   }
 
-  const botonMePlanto = document.getElementById("me-planto");
-
   if (botonMePlanto) {
     botonMePlanto.addEventListener("click", mePlanto);
   }
-
-  const botonNuevaPartida = document.getElementById("reiniciar");
 
   if (botonNuevaPartida) {
     botonNuevaPartida.addEventListener("click", nuevaPartida);
