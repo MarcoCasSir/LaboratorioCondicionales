@@ -3,6 +3,14 @@ import "./style.css";
 document.addEventListener("DOMContentLoaded", () => {
   eventos();
   muestraPuntuacion(puntuacion);
+
+  const botonNuevaPartida = document.getElementById(
+    "reiniciar"
+  ) as HTMLButtonElement;
+
+  if (botonNuevaPartida) {
+    botonNuevaPartida.disabled = true;
+  }
 });
 
 let puntuacion = 0;
@@ -69,6 +77,14 @@ const gameOver = (puntuacion: number): void => {
     if (botonDameCarta) {
       botonDameCarta.disabled = true;
     }
+
+    const botonNuevaPartida = document.getElementById(
+      "reiniciar"
+    ) as HTMLButtonElement;
+
+    if (botonNuevaPartida) {
+      botonNuevaPartida.disabled = false;
+    }
   } else if (puntuacion === 7.5) {
     mensaje.textContent = `HAS GANADO !!!!!  - GAME OVER`;
 
@@ -90,7 +106,7 @@ const gameOver = (puntuacion: number): void => {
   }
 };
 
-/* ------------------------------------FUNCION GAME OVER----------------------------------- */
+/* ------------------------------------FUNCION ME PLANTO----------------------------------- */
 
 const mePlanto = (): void => {
   let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
@@ -112,6 +128,14 @@ const mePlanto = (): void => {
     mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
   }
 
+  const botonNuevaPartida = document.getElementById(
+    "reiniciar"
+  ) as HTMLButtonElement;
+
+  if (botonNuevaPartida) {
+    botonNuevaPartida.disabled = false;
+  }
+
   const botonDameCarta = document.getElementById(
     "dame-carta"
   ) as HTMLButtonElement;
@@ -119,8 +143,53 @@ const mePlanto = (): void => {
   if (botonDameCarta) {
     botonDameCarta.disabled = true;
   }
+
+  const botonMePlanto = document.getElementById(
+    "me-planto"
+  ) as HTMLButtonElement;
+
+  if (botonMePlanto) {
+    botonMePlanto.disabled = true;
+  }
 };
 
+/* -------------------------------------FUNCION NUEVO JUEGO ------------------------------ */
+
+const nuevaPartida = (): void => {
+  puntuacion = 0;
+
+  const imagen = document.getElementById("imagen-carta") as HTMLImageElement;
+
+  if (imagen) {
+    imagen.src = "src/img/back.jpg";
+  }
+
+  muestraPuntuacion(puntuacion);
+
+  const botonDameCarta = document.getElementById(
+    "dame-carta"
+  ) as HTMLButtonElement;
+
+  if (botonDameCarta) {
+    botonDameCarta.disabled = false;
+  }
+
+  const botonMePlanto = document.getElementById(
+    "me-planto"
+  ) as HTMLButtonElement;
+
+  if (botonMePlanto) {
+    botonMePlanto.disabled = false;
+  }
+
+  const botonNuevaPartida = document.getElementById(
+    "reiniciar"
+  ) as HTMLButtonElement;
+
+  if (botonNuevaPartida) {
+    botonNuevaPartida.disabled = true;
+  }
+};
 /* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
 
 const muestraCarta = (carta: number): void => {
@@ -161,7 +230,7 @@ const muestraCarta = (carta: number): void => {
   }
 };
 
-/* --------------------------------------------FUNCION EVENTOS xra lso BOTONES--------------------- */
+/* ----------------------------------FUNCION EVENTOS xra los BOTONES--------------------- */
 
 function eventos() {
   const botonDameCarta = document.getElementById("dame-carta");
@@ -173,6 +242,12 @@ function eventos() {
   const botonMePlanto = document.getElementById("me-planto");
 
   if (botonMePlanto) {
-    botonMePlanto?.addEventListener("click", mePlanto);
+    botonMePlanto.addEventListener("click", mePlanto);
+  }
+
+  const botonNuevaPartida = document.getElementById("reiniciar");
+
+  if (botonNuevaPartida) {
+    botonNuevaPartida.addEventListener("click", nuevaPartida);
   }
 }
