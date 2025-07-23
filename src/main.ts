@@ -48,12 +48,35 @@ const dameCarta = (): void => {
   gameOver(puntuacion);
 };
 
-/* ------------------------------------FUNCION GAME OVER--------- ------------------------ */
+/* ------------------------------------FUNCION GAME OVER---------------------------------- */
 
 const gameOver = (puntuacion: number): void => {
   let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
   if (puntuacion > 7.5) {
-    mensaje.textContent = `TU PUNTUACION HA SUPERADO 7.5 PUNTOS - GAME OVER`;
+    mensaje.textContent = `TE HAS PASADO - GAME OVER`;
+  }
+};
+
+/* ------------------------------------FUNCION GAME OVER----------------------------------- */
+
+const mePlanto = (): void => {
+  let mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
+
+  let puntos = (document.getElementById("puntos") as HTMLElement).textContent;
+  let puntuacionActual: number = 0;
+
+  if (puntos) {
+    puntuacionActual = parseFloat(puntos);
+  }
+
+  if (puntuacionActual < 4) {
+    mensaje.textContent = `HAS SIDO MUY CONSERVADOR`;
+  } else if (puntuacionActual === 5) {
+    mensaje.textContent = `TE HA ENTRADO EL CAGUELO EH!!!`;
+  } else if (puntuacionActual === 6 || puntuacionActual === 7) {
+    mensaje.textContent = `CASI CASI  EH!!!`;
+  } else if (puntuacionActual === 7.5) {
+    mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
   }
 };
 
@@ -104,5 +127,11 @@ function eventos() {
 
   if (botonEventos) {
     botonEventos.addEventListener("click", dameCarta);
+  }
+
+  const botonMePlanto = document.getElementById("me-planto");
+
+  if (botonMePlanto) {
+    botonMePlanto?.addEventListener("click", mePlanto);
   }
 }
