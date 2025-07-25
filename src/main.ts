@@ -8,6 +8,8 @@ let botonMePlanto: HTMLButtonElement;
 let botonNuevaPartida: HTMLButtonElement;
 let botonSiguienteCarta: HTMLButtonElement;
 
+let puntuacion: number = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
   puntos = document.getElementById("puntos") as HTMLElement;
   mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
@@ -34,10 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---------------------------------FUNCION PARA GENERAR CARTA ALEATORIA---------------------------------------------- */
 
 const generarCartaAleatoria = () => Math.floor(Math.random() * 10) + 1;
-
-let carta: number = generarCartaAleatoria();
-
-let puntuacion: number = 0;
 
 /* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION----------------------------------------------------- */
 
@@ -68,6 +66,7 @@ const sumarPuntos = (carta: number): void => {
 /* ------------------------FUNCION PARA PEDIR CARTAS. Invoca funciones muestraCarta/sumarPuntos /gameOver ------------------------ */
 
 const dameCarta = (): void => {
+  let carta: number = generarCartaAleatoria();
   if (carta > 7) {
     carta += 2;
   }
