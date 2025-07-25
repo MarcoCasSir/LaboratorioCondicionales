@@ -43,7 +43,7 @@ const muestraPuntuacion = (puntuacion: number): void => {
   }
 };
 
-/* ---------------------------------FUNCION PARA SUMAR PUNTOS -------------------------- */
+/* ---------------------------------FUNCION PARA SUMAR PUNTOS. Invoca funcion mostrarPuntuiacion-------------------------- */
 
 const sumarPuntos = (carta: number): void => {
   let valorCarta: number;
@@ -59,7 +59,7 @@ const sumarPuntos = (carta: number): void => {
   muestraPuntuacion(puntuacion);
 };
 
-/* ------------------------------------FUNCION PARA PEDIR CARTAS ------------------------ */
+/* ------------------------FUNCION PARA PEDIR CARTAS. Invoca funciones muestraCarta/sumarPuntos /gameOver ------------------------ */
 
 const dameCarta = (): void => {
   let carta = Math.floor(Math.random() * 10) + 1;
@@ -73,7 +73,7 @@ const dameCarta = (): void => {
   gameOver(puntuacion);
 };
 
-/* ------------------------------------FUNCION GAME OVER---------------------------------- */
+/* ------------------------------------FUNCION GAME OVER --------------------------------- */
 
 const gameOver = (puntuacion: number): void => {
   if (puntuacion > 7.5) {
