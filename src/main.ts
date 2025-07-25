@@ -31,9 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-let puntuacion = 0;
+/* ---------------------------------FUNCION PARA GENERAR CARTA ALEATORIA---------------------------------------------- */
 
-/* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION------------------- */
+const generarCartaAleatoria = () => Math.floor(Math.random() * 10) + 1;
+
+let carta: number = generarCartaAleatoria();
+
+let puntuacion: number = 0;
+
+/* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION----------------------------------------------------- */
 
 const muestraPuntuacion = (puntuacion: number): void => {
   if (puntos) {
@@ -62,8 +68,6 @@ const sumarPuntos = (carta: number): void => {
 /* ------------------------FUNCION PARA PEDIR CARTAS. Invoca funciones muestraCarta/sumarPuntos /gameOver ------------------------ */
 
 const dameCarta = (): void => {
-  let carta = Math.floor(Math.random() * 10) + 1;
-
   if (carta > 7) {
     carta += 2;
   }
