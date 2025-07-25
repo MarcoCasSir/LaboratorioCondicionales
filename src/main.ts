@@ -52,7 +52,7 @@ const muestraPuntuacion = (puntuacion: number): void => {
 const sumarPuntos = (carta: number): void => {
   let valorCarta: number;
 
-  if (carta === 10 || carta === 11 || carta === 12) {
+  if (carta > 10) {
     valorCarta = 0.5;
   } else {
     valorCarta = carta;
