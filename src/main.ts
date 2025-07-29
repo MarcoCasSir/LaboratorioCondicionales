@@ -173,11 +173,7 @@ const nuevaPartida = (): void => {
 };
 
 const proximaCarta = (): void => {
-  let carta = Math.floor(Math.random() * 10) + 1;
-
-  if (carta > 7) {
-    carta += 2;
-  }
+  let carta = generarCartaAleatoria();
 
   muestraCarta(carta);
   sumarPuntos(carta);
