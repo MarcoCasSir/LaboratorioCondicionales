@@ -1,7 +1,5 @@
 import "./style.css";
 
-let puntos: HTMLElement;
-let mensaje: HTMLElement;
 let imagen: HTMLImageElement;
 let botonDameCarta: HTMLButtonElement;
 let botonMePlanto: HTMLButtonElement;
@@ -11,8 +9,6 @@ let botonSiguienteCarta: HTMLButtonElement;
 let puntuacion: number = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  puntos = document.getElementById("puntos") as HTMLElement;
-  mensaje = document.getElementById("mensaje-despues-tiros") as HTMLElement;
   imagen = document.getElementById("imagen-carta") as HTMLImageElement;
   botonDameCarta = document.getElementById("dame-carta") as HTMLButtonElement;
   botonMePlanto = document.getElementById("me-planto") as HTMLButtonElement;
@@ -33,13 +29,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ---------------------------------FUNCION PARA GENERAR CARTA ALEATORIA---------------------------------------------- */
+/* -----------------------------------------------------------------------------------FUNCIONES 1 ---------------------------------------------- */
 
-const generarCartaAleatoria = () => Math.floor(Math.random() * 10) + 1;
+const generarCartaAleatoria = (): number => {
+  let carta = Math.floor(Math.random() * 10) + 1;
 
-/* ---------------------------------FUNCION PARA MOSTRAR PUNTUACION----------------------------------------------------- */
+  return carta > 7 ? carta + 2 : carta;
+};
+
+//se encarga de asignar un valor a la carta
+const valorCarta = (carta: number): number => {
+  return carta > 7 ? 0.5 : carta;
+};
+
+// se encarga de modificar la puntuacion y envocar la funcion para mostrar la puntuaccion.
+const sumarPuntos = (carta: number): void => {
+  puntuacion += valorCarta(carta);
+  muestraPuntuacion(puntuacion);
+};
+
+const actualizarMensaje = (texto: string): void => {
+  const mensaje = document.getElementById("mensaje-despues-tiros");
+  if (mensaje !== null && mensaje !== undefined) {
+    mensaje.textContent = texto;
+  }
+};
+
+const gameOver = (): void => {
+  if (puntuacion > 7.5) {
+    actualizarMensaje(`TE HAS PASADO - GAME OVER`);
+
+    if (botonMePlanto) {
+      botonMePlanto.disabled = true;
+    }
+
+    if (botonDameCarta) {
+      botonDameCarta.disabled = true;
+    }
+
+    if (botonNuevaPartida) {
+      botonNuevaPartida.disabled = false;
+    }
+    if (botonSiguienteCarta) {
+      botonSiguienteCarta.disabled = true;
+    }
+  } else {
+    if (puntuacion === 7.5) {
+      actualizarMensaje(`HAS GANADO !!!!!  - GAME OVER`);
+
+      if (botonMePlanto) {
+        botonMePlanto.disabled = true;
+      }
+
+      if (botonNuevaPartida) {
+        botonNuevaPartida.disabled = false;
+      }
+
+      if (botonDameCarta) {
+        botonDameCarta.disabled = true;
+      }
+
+      if (botonSiguienteCarta) {
+        botonSiguienteCarta.disabled = true;
+      }
+    }
+  }
+};
+
+/* -------------------------------------------------------------------------------------------------FUNCION 2 --------------------------------*/
+
+const dameCarta = (): void => {
+  const carta = generarCartaAleatoria();
+  muestraCarta(carta);
+  sumarPuntos(carta);
+  gameOver();
+};
+
+/* ------------------------------------------------------------------------------------FUNCION  3 ----------------------------------------------------- */
 
 const muestraPuntuacion = (puntuacion: number): void => {
+  const puntos = document.getElementById("puntos");
+
   if (puntos) {
     puntos.textContent = puntuacion.toString();
   } else {
@@ -47,87 +117,15 @@ const muestraPuntuacion = (puntuacion: number): void => {
   }
 };
 
-/* ---------------------------------FUNCION PARA SUMAR PUNTOS. Invoca funcion mostrarPuntuiacion-------------------------- */
-
-const sumarPuntos = (carta: number): void => {
-  let valorCarta: number;
-
-  if (carta > 10) {
-    valorCarta = 0.5;
-  } else {
-    valorCarta = carta;
-  }
-
-  puntuacion += valorCarta;
-
-  muestraPuntuacion(puntuacion);
-};
-
-/* ------------------------FUNCION PARA PEDIR CARTAS. Invoca funciones muestraCarta/sumarPuntos /gameOver ------------------------ */
-
-const dameCarta = (): void => {
-  let carta: number = generarCartaAleatoria();
-  if (carta > 7) {
-    carta += 2;
-  }
-
-  muestraCarta(carta);
-  sumarPuntos(carta);
-  gameOver(puntuacion);
-};
-
-/* ------------------------------------FUNCION GAME OVER --------------------------------- */
-
-const gameOver = (puntuacion: number): void => {
-  if (puntuacion > 7.5) {
-    mensaje.textContent = `TE HAS PASADO - GAME OVER`;
-
-    if (botonMePlanto) {
-      botonMePlanto.disabled = true;
-    }
-
-    if (botonDameCarta) {
-      botonDameCarta.disabled = true;
-    }
-
-    if (botonNuevaPartida) {
-      botonNuevaPartida.disabled = false;
-    }
-    if (botonSiguienteCarta) {
-      botonSiguienteCarta.disabled = true;
-    }
-  } else if (puntuacion === 7.5) {
-    mensaje.textContent = `HAS GANADO !!!!!  - GAME OVER`;
-
-    if (botonMePlanto) {
-      botonMePlanto.disabled = true;
-    }
-
-    if (botonNuevaPartida) {
-      botonNuevaPartida.disabled = false;
-    }
-
-    if (botonDameCarta) {
-      botonDameCarta.disabled = true;
-    }
-
-    if (botonSiguienteCarta) {
-      botonSiguienteCarta.disabled = true;
-    }
-  }
-};
-
-/* ------------------------------------FUNCION ME PLANTO----------------------------------- */
-
 const mePlanto = (): void => {
   if (puntuacion < 4) {
-    mensaje.textContent = `HAS SIDO MUY CONSERVADOR`;
+    actualizarMensaje(`HAS SIDO MUY CONSERVADOR`);
   } else if (puntuacion === 5) {
-    mensaje.textContent = `TE HA ENTRADO EL CAGUELO EH!!!`;
+    actualizarMensaje(`TE HA ENTRADO EL CAGUELO EH!!!`);
   } else if (puntuacion === 6 || puntuacion === 7) {
-    mensaje.textContent = `CASI CASI  EH!!!`;
+    actualizarMensaje(`CASI CASI  EH!!!`);
   } else if (puntuacion === 7.5) {
-    mensaje.textContent = `ENHORABUENA - HAS GANADO !!!`;
+    actualizarMensaje(`ENHORABUENA - HAS GANADO !!!`);
   }
 
   if (botonNuevaPartida) {
@@ -147,8 +145,6 @@ const mePlanto = (): void => {
   }
 };
 
-/* -------------------------------------FUNCION NUEVO JUEGO ------------------------------ */
-
 const nuevaPartida = (): void => {
   puntuacion = 0;
 
@@ -157,7 +153,7 @@ const nuevaPartida = (): void => {
   }
 
   muestraPuntuacion(puntuacion);
-  mensaje.textContent = "";
+  actualizarMensaje("");
 
   if (botonDameCarta) {
     botonDameCarta.disabled = false;
@@ -176,8 +172,6 @@ const nuevaPartida = (): void => {
   }
 };
 
-/* -------------------------------------FUNCION SIGUIENTE CARTA ------------------------------ */
-
 const proximaCarta = (): void => {
   let carta = Math.floor(Math.random() * 10) + 1;
 
@@ -187,10 +181,8 @@ const proximaCarta = (): void => {
 
   muestraCarta(carta);
   sumarPuntos(carta);
-  gameOver(puntuacion);
+  gameOver();
 };
-
-/* -------------------------------------FUNCION MOSTRAR CARTA ----------------------------- */
 
 const muestraCarta = (carta: number): void => {
   if (imagen) {
