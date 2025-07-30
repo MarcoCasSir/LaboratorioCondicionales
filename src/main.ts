@@ -8,12 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const inicioPartida = () => {
   puntuacion = 0;
+
   muestraCarta();
-  eventos();
   muestraPuntuacion(puntuacion);
+  actualizarMensaje("");
 
   desabilitarBotones("reiniciar", true);
   desabilitarBotones("como-seria", true);
+
+  eventos();
 };
 
 // se encarga de generar un numero alatorio y dar un valor entero entre (1 -12)
@@ -72,6 +75,7 @@ const gameOver = (): void => {
 // al activar el evento del boton dame carta, inicializa las funciones necesarias a partir de la carta generada automaticamente
 const dameCarta = (): void => {
   const carta = generarCartaAleatoria();
+
   muestraCarta(carta);
   sumarPuntos(carta);
   gameOver();
