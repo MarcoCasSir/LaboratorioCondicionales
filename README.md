@@ -26,4 +26,4 @@ Las cartas numéricas valen su valor nominal, es decir, el As (uno de cada palo)
 - Desarrollo funcion nuevaPartida. Definimo la variable puntuacion de nuevo a 0. Invocamos la funcion muestraPuntuacion, y vaciamo el contenido del mensaje y anulamos o activamos botones.
 - Desarrollo proximaCarta. Es una opcion mas al juego , de conocer el sigueinte valor que se hubiera generado.Para esta generamos una nuevo numero random, preguntamos por su valor y invocamos las funciones para mostrar informacion al jugador.
 - Encapsulamos todos los botones en la funciooEventos y esta la iclimos en el DOMContentLoaded para qeu se active una vez el HTml este completamente cargado.
-- -Para facilitar la lectura y la gestion del codigo, se crean una serie de variables donde se relacionan con los diferentes elementos del DOM.
+- la aplicacion funciona correctamente. Toca refaactorizar el codigo para que cada funcion realice una unica tarea. Se generan mas funciones.

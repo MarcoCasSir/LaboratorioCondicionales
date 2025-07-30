@@ -61,9 +61,9 @@ const gameOver = (): void => {
     if (puntuacion === 7.5) {
       actualizarMensaje(`HAS GANADO !!!!!  - GAME OVER`);
 
+      desabilitarBotones("dame-carta", true);
       desabilitarBotones("me-planto", true);
       desabilitarBotones("reiniciar", false);
-      desabilitarBotones("dame-carta", true);
       desabilitarBotones("como-seria", true);
     }
   }
@@ -114,7 +114,6 @@ const mePlanto = (): void => {
 const nuevaPartida = (): void => {
   inicioPartida();
 
-  muestraPuntuacion(puntuacion);
   actualizarMensaje("");
 
   desabilitarBotones("dame-carta", false);
