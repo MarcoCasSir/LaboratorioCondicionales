@@ -1,35 +1,16 @@
 import "./style.css";
 
-let imagen: HTMLImageElement;
-let botonDameCarta: HTMLButtonElement;
-let botonMePlanto: HTMLButtonElement;
-let botonNuevaPartida: HTMLButtonElement;
-let botonSiguienteCarta: HTMLButtonElement;
-
 let puntuacion: number = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  imagen = document.getElementById("imagen-carta") as HTMLImageElement;
-  botonDameCarta = document.getElementById("dame-carta") as HTMLButtonElement;
-  botonMePlanto = document.getElementById("me-planto") as HTMLButtonElement;
-  botonNuevaPartida = document.getElementById("reiniciar") as HTMLButtonElement;
-  botonSiguienteCarta = document.getElementById(
-    "como-seria"
-  ) as HTMLButtonElement;
-
   eventos();
   muestraPuntuacion(puntuacion);
 
-  if (botonNuevaPartida) {
-    botonNuevaPartida.disabled = true;
-  }
-
-  if (botonSiguienteCarta) {
-    botonSiguienteCarta.disabled = true;
-  }
+  desabilitarBotones("reiniciar", true);
+  desabilitarBotones("como-seria", true);
 });
 
-/* -----------------------------------------------------------------------------------FUNCIONES 1 ---------------------------------------------- */
+/*-----------------------------------------------------------------------------FUNCIONES 1 ---------------------------------------------- */
 
 const generarCartaAleatoria = (): number => {
   let carta = Math.floor(Math.random() * 10) + 1;
@@ -50,7 +31,7 @@ const sumarPuntos = (carta: number): void => {
 
 const actualizarMensaje = (texto: string): void => {
   const mensaje = document.getElementById("mensaje-despues-tiros");
-  if (mensaje !== null && mensaje !== undefined) {
+  if (mensaje instanceof HTMLElement) {
     mensaje.textContent = texto;
   }
 };
@@ -59,39 +40,18 @@ const gameOver = (): void => {
   if (puntuacion > 7.5) {
     actualizarMensaje(`TE HAS PASADO - GAME OVER`);
 
-    if (botonMePlanto) {
-      botonMePlanto.disabled = true;
-    }
-
-    if (botonDameCarta) {
-      botonDameCarta.disabled = true;
-    }
-
-    if (botonNuevaPartida) {
-      botonNuevaPartida.disabled = false;
-    }
-    if (botonSiguienteCarta) {
-      botonSiguienteCarta.disabled = true;
-    }
+    desabilitarBotones("dame-carta", true);
+    desabilitarBotones("me-planto", true);
+    desabilitarBotones("reiniciar", false);
+    desabilitarBotones("como-seria", true);
   } else {
     if (puntuacion === 7.5) {
       actualizarMensaje(`HAS GANADO !!!!!  - GAME OVER`);
 
-      if (botonMePlanto) {
-        botonMePlanto.disabled = true;
-      }
-
-      if (botonNuevaPartida) {
-        botonNuevaPartida.disabled = false;
-      }
-
-      if (botonDameCarta) {
-        botonDameCarta.disabled = true;
-      }
-
-      if (botonSiguienteCarta) {
-        botonSiguienteCarta.disabled = true;
-      }
+      desabilitarBotones("me-planto", true);
+      desabilitarBotones("reiniciar", false);
+      desabilitarBotones("dame-carta", true);
+      desabilitarBotones("como-seria", true);
     }
   }
 };
@@ -110,7 +70,11 @@ const dameCarta = (): void => {
 const muestraPuntuacion = (puntuacion: number): void => {
   const puntos = document.getElementById("puntos");
 
-  if (puntos) {
+  if (
+    puntos !== null &&
+    puntos !== undefined &&
+    puntos instanceof HTMLElement
+  ) {
     puntos.textContent = puntuacion.toString();
   } else {
     console.log("Elemento 'puntos' no encontrado");
@@ -128,48 +92,30 @@ const mePlanto = (): void => {
     actualizarMensaje(`ENHORABUENA - HAS GANADO !!!`);
   }
 
-  if (botonNuevaPartida) {
-    botonNuevaPartida.disabled = false;
-  }
-
-  if (botonDameCarta) {
-    botonDameCarta.disabled = true;
-  }
-
-  if (botonMePlanto) {
-    botonMePlanto.disabled = true;
-  }
-
-  if (botonSiguienteCarta) {
-    botonSiguienteCarta.disabled = false;
-  }
+  desabilitarBotones("me-planto", true);
+  desabilitarBotones("reiniciar", false);
+  desabilitarBotones("dame-carta", true);
+  desabilitarBotones("como-seria", false);
 };
 
 const nuevaPartida = (): void => {
   puntuacion = 0;
-
-  if (imagen) {
+  const imagen = document.getElementById("imagen-carta");
+  if (
+    imagen !== null &&
+    imagen !== undefined &&
+    imagen instanceof HTMLImageElement
+  ) {
     imagen.src = "src/img/back.jpg";
   }
 
   muestraPuntuacion(puntuacion);
   actualizarMensaje("");
 
-  if (botonDameCarta) {
-    botonDameCarta.disabled = false;
-  }
-
-  if (botonMePlanto) {
-    botonMePlanto.disabled = false;
-  }
-
-  if (botonNuevaPartida) {
-    botonNuevaPartida.disabled = true;
-  }
-
-  if (botonSiguienteCarta) {
-    botonSiguienteCarta.disabled = true;
-  }
+  desabilitarBotones("me-planto", false);
+  desabilitarBotones("reiniciar", true);
+  desabilitarBotones("dame-carta", false);
+  desabilitarBotones("como-seria", true);
 };
 
 const proximaCarta = (): void => {
@@ -181,7 +127,12 @@ const proximaCarta = (): void => {
 };
 
 const muestraCarta = (carta: number): void => {
-  if (imagen) {
+  const imagen = document.getElementById("imagen-carta");
+  if (
+    imagen !== null &&
+    imagen !== undefined &&
+    imagen instanceof HTMLImageElement
+  ) {
     switch (carta) {
       case 1:
         imagen.src = "src/img/1_as-copas.jpg";
@@ -217,22 +168,57 @@ const muestraCarta = (carta: number): void => {
   }
 };
 
+const desabilitarBotones = (id: string, disabled: boolean): void => {
+  const button = document.getElementById(id);
+
+  if (
+    button !== null &&
+    button !== undefined &&
+    button instanceof HTMLButtonElement
+  ) {
+    button.disabled = disabled;
+  } else {
+    console.error(`El elemento con id "${id}" no existe o no es un botón.`);
+  }
+};
+
 /* ----------------------------------FUNCION EVENTOS xra los BOTONES--------------------- */
 
-function eventos() {
-  if (botonDameCarta) {
+function eventos(): void {
+  const botonDameCarta = document.getElementById("dame-carta");
+  const botonMePlanto = document.getElementById("me-planto");
+  const botonNuevaPartida = document.getElementById("reiniciar");
+  const botonSiguienteCarta = document.getElementById("como-seria");
+
+  if (
+    botonDameCarta !== null &&
+    botonDameCarta !== undefined &&
+    botonDameCarta instanceof HTMLButtonElement
+  ) {
     botonDameCarta.addEventListener("click", dameCarta);
   }
 
-  if (botonMePlanto) {
+  if (
+    botonMePlanto !== null &&
+    botonMePlanto !== undefined &&
+    botonMePlanto instanceof HTMLButtonElement
+  ) {
     botonMePlanto.addEventListener("click", mePlanto);
   }
 
-  if (botonNuevaPartida) {
+  if (
+    botonNuevaPartida !== null &&
+    botonNuevaPartida !== undefined &&
+    botonNuevaPartida instanceof HTMLButtonElement
+  ) {
     botonNuevaPartida.addEventListener("click", nuevaPartida);
   }
 
-  if (botonSiguienteCarta) {
+  if (
+    botonSiguienteCarta !== null &&
+    botonSiguienteCarta !== undefined &&
+    botonSiguienteCarta instanceof HTMLButtonElement
+  ) {
     botonSiguienteCarta.addEventListener("click", proximaCarta);
   }
 }
